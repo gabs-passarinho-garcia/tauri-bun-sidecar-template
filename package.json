@@ -1,0 +1,41 @@
+{
+  "name": "tauri-bun-sidecar-template-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "//--- DESENVOLVIMENTO ---": "",
+    "dev": "bun run --parallel dev:*",
+    "dev:desktop": "bun --cwd ./apps/desktop dev",
+    "dev:server": "bun --cwd ./apps/server dev",
+    "//--- QUALIDADE DE CÓDIGO ---": "",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check:type": "bunx tsc --build apps/desktop apps/server",
+    "check": "bun run format:check && bun run lint && bun run check:type",
+    "//--- TESTES ---": "",
+    "test": "bun test",
+    "test:cov": "bun test --coverage",
+    "//--- BUILD E DISTRIBUIÇÃO ---": "",
+    "clean": "rm -rf ./apps/desktop/dist ./apps/desktop/src-tauri/target ./apps/server/dist ./dist",
+    "build": "bun run clean && bun --cwd ./apps/server build && bun --cwd ./apps/desktop build",
+    "release": "bun run build && bun --cwd ./apps/desktop tauri build",
+    "release:debug": "bun run build && bun --cwd ./apps/desktop tauri build --debug"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.35.0",
+    "@types/jest": "30.0.0",
+    "@typescript-eslint/eslint-plugin": "8.43.0",
+    "@typescript-eslint/parser": "8.43.0",
+    "eslint": "9.35.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.4",
+    "eslint-plugin-sonarjs": "3.0.5",
+    "globals": "16.3.0",
+    "prettier": "3.6.2",
+    "typescript": "5.9.2"
+  }
+}
