@@ -17,7 +17,7 @@ function App(): JSX.Element {
     const pollForPort = async (): Promise<void> => {
       try {
         // Check if we're in a Tauri environment
-        if (typeof window !== 'undefined' && window.__TAURI_INTERNALS__) {
+        if (typeof window !== "undefined" && window.__TAURI_INTERNALS__) {
           // Dynamic import to handle Tauri API loading
           const { invoke } = await import("@tauri-apps/api/core");
           const port = await invoke<number | null>("get_sidecar_port");
@@ -31,7 +31,7 @@ function App(): JSX.Element {
             }, 500);
           }
         } else {
-          console.warn('Not running in Tauri environment, using fallback port');
+          console.warn("Not running in Tauri environment, using fallback port");
           // Fallback for development - try common ports
           setSidecarPort(3000);
         }
