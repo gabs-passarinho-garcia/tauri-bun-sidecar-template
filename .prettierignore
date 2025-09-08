@@ -1,0 +1,14 @@
+# Pastas de build e dependências
+**/node_modules
+**/dist
+**/build
+**/target
+
+# Arquivos de lock
+bun.lockb
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
+# Logs
+*.log
