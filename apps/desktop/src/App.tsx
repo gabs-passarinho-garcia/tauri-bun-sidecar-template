@@ -1,93 +1,77 @@
-import { JSX, useState, useEffect } from "react";
-
-// Extend Window interface for Tauri
-declare global {
-  interface Window {
-    __TAURI_INTERNALS__?: unknown;
-  }
-}
+import { JSX, useState } from 'react';
+import { useSidecarPort } from './hooks/useSidecarPort';
 
 function App(): JSX.Element {
-  const [pingResponse, setPingResponse] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [sidecarPort, setSidecarPort] = useState<number | null>(null);
+  // --- Estados do Componente ---
+  const [pingResponse, setPingResponse] = useState('');
+  const { sidecarPort, isLoading: sidecarLoading, error: sidecarError } = useSidecarPort();
 
-  useEffect(() => {
-    // Poll for sidecar port every 500ms until we get it
-    const pollForPort = async (): Promise<void> => {
-      try {
-        // Check if we're in a Tauri environment
-        if (typeof window !== "undefined" && window.__TAURI_INTERNALS__) {
-          // Dynamic import to handle Tauri API loading
-          const { invoke } = await import("@tauri-apps/api/core");
-          const port = await invoke<number | null>("get_sidecar_port");
-          if (port) {
-            setSidecarPort(port);
-            console.info(`Sidecar running on port ${port}`);
-          } else {
-            // Keep polling if port is not available yet
-            setTimeout(() => {
-              pollForPort().catch(console.error);
-            }, 500);
-          }
-        } else {
-          console.warn("Not running in Tauri environment, using fallback port");
-          // Fallback for development - try common ports
-          setSidecarPort(3000);
-        }
-      } catch (error) {
-        console.error("Failed to get sidecar port:", error);
-        // Retry after a delay if Tauri API is not ready
-        setTimeout(() => {
-          pollForPort().catch(console.error);
-        }, 1000);
-      }
-    };
-
-    pollForPort().catch(console.error);
-  }, []);
-
-  async function pingBackend(): Promise<void> {
+  // --- Funções de Interação ---
+  const pingBackend = async (): Promise<void> => {
+    
     if (!sidecarPort) {
-      setPingResponse("Error: Sidecar port not available yet");
+      setPingResponse('Erro: Porta do sidecar não disponível');
       return;
     }
 
-    setIsLoading(true);
-    setPingResponse("");
     try {
-      const response = await fetch(`http://localhost:${sidecarPort}/ping`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data: unknown = await response.json();
-      setPingResponse(JSON.stringify(data));
+      const url = `http://localhost:${sidecarPort}/ping`;
+      
+      const response = await fetch(url);
+      
+      const data = await response.text();
+      
+      // Try to parse as JSON first
+       try {
+         const jsonData = JSON.parse(data) as Record<string, unknown>;
+         
+         // If it's JSON, try to get the 'message' field, otherwise stringify
+         const message = jsonData.message;
+         const displayText = typeof message === 'string' ? message : JSON.stringify(jsonData, null, 2);
+         setPingResponse(displayText);
+       } catch {
+         setPingResponse(data);
+       }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : String(error);
-      setPingResponse(`Error: ${errorMessage}`);
-    } finally {
-      setIsLoading(false);
+      console.error('[DEBUG] Ping error:', error);
+      setPingResponse(`Erro: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
     }
   }
 
-  const handlePingClick = (): void => {
-    pingBackend().catch((error) => {
-      console.error("Unhandled error in pingBackend:", error);
-    });
-  };
+  // --- Renderização do Componente ---
+  if (sidecarLoading) {
+    return (
+      <div className='container'>
+        <h1>PoC: Tauri + Bun Sidecar</h1>
+        <p>Carregando sidecar...</p>
+      </div>
+    );
+  }
 
-  console.info(pingResponse);
+  if (sidecarError) {
+    return (
+      <div className='container'>
+        <h1>PoC: Tauri + Bun Sidecar</h1>
+        <p style={{ color: 'red' }}>Erro: {sidecarError}</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="container">
+    <div className='container'>
       <h1>PoC: Tauri + Bun Sidecar</h1>
       <h2>Missão 1: "Hello, Sidecar"</h2>
 
-      <div className="card">
-        <button onClick={handlePingClick} disabled={isLoading}>
-          {isLoading ? "Pinging..." : "1. Ping Backend"}
+      <div className='card'>
+        <button onClick={() => void pingBackend()} disabled={sidecarLoading || !sidecarPort}>
+          {sidecarLoading ? 'Pinging...' : '1. Ping Backend'}
         </button>
+
+        <p>
+          <strong>Status do Sidecar:</strong>{' '}
+          {sidecarPort ? `Pronto na porta ${sidecarPort}` : 'Iniciando...'}
+        </p>
+
         <p>
           <strong>Resposta do Servidor:</strong>
         </p>
