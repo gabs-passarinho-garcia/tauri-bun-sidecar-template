@@ -1,10 +1,10 @@
 {
   "name": "tauri-bun-sidecar-template",
-  "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "bun tauri dev",
+    "dev": "bunx --bun tauri dev",
+    "dev:vite": "bunx --bun vite",
     "build": "bunx --bun tsc && bunx --bun vite build",
     "lint": "bunx --bun eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "tauri": "bun tauri",
