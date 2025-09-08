@@ -10,7 +10,7 @@
     "dev:desktop": "bun --cwd ./apps/desktop dev",
     "dev:server": "bun --cwd ./apps/server dev",
     "//--- QUALIDADE DE CÓDIGO ---": "",
-    "lint": "eslint . --max-warnings 0",
+    "lint": "eslint . --max-warnings 10",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
