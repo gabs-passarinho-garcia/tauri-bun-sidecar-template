@@ -4,8 +4,7 @@ import react from "@vitejs/plugin-react";
 const host = process.env.TAURI_DEV_HOST;
 
 // https://vite.dev/config/
-// eslint-disable-next-line @typescript-eslint/require-await
-export default defineConfig(async () => ({
+export default defineConfig(() => ({
   plugins: [react()],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
