@@ -77,7 +77,7 @@ function App(): JSX.Element {
     });
   };
 
-  console.log(pingResponse);
+  console.info(pingResponse);
 
   return (
     <div className="container">
