@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { JSX, useState } from "react";
 
-function App() {
+function App(): JSX.Element {
   const [pingResponse, setPingResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  async function pingBackend() {
+  async function pingBackend(): Promise<void> {
     setIsLoading(true);
     setPingResponse("");
     try {
@@ -12,14 +12,22 @@ function App() {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const data = await response.json() as unknown;
+      const data: unknown = await response.json();
       setPingResponse(JSON.stringify(data));
     } catch (error) {
-      setPingResponse(`Error: ${error as Error}`);
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      setPingResponse(`Error: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
   }
+
+  const handlePingClick = (): void => {
+    pingBackend().catch((error) => {
+      console.error("Unhandled error in pingBackend:", error);
+    });
+  };
 
   return (
     <div className="container">
@@ -27,7 +35,7 @@ function App() {
       <h2>Missão 1: "Hello, Sidecar"</h2>
 
       <div className="card">
-        <button onClick={pingBackend} disabled={isLoading}>
+        <button onClick={handlePingClick} disabled={isLoading}>
           {isLoading ? "Pinging..." : "1. Ping Backend"}
         </button>
         <p>
