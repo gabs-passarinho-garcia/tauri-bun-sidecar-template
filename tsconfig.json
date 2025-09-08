@@ -1,0 +1,34 @@
+// tsconfig.json na RAÍZ
+{
+  "compilerOptions": {
+    // Language and Environment
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    
+    // Modules
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+
+    // Interop Constraints
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+
+    // Type Checking
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+
+    // Completeness
+    "skipLibCheck": true,
+
+    // Custom
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./apps/desktop/src/*"], // Aponta para o alias do desktop
+      "@server/*": ["./apps/server/src/*"] // Novo alias para o server
+    }
+  }
+}
