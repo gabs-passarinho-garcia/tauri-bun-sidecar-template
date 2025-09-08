@@ -8,7 +8,7 @@ function App(): JSX.Element {
     setIsLoading(true);
     setPingResponse("");
     try {
-      const response = await fetch("http://localhost:3000/ping");
+      const response = await fetch("http://localhost:3002/ping");
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
