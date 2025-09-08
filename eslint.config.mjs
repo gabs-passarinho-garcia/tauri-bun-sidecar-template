@@ -36,6 +36,7 @@ export default [
       parserOptions: {
         project: [
           "./apps/desktop/tsconfig.json",
+          "./apps/desktop/tsconfig.node.json",
           "./apps/server/tsconfig.json",
         ],
         ecmaVersion: "latest",
