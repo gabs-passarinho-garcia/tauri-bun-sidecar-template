@@ -2,25 +2,36 @@ import { Elysia } from "elysia";
 import { writeFileSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
+import { cors } from "@elysiajs/cors";
 
-const app = new Elysia().get("/ping", ({ set }) => {
-  console.info("🏓 Ping endpoint called!");
+const app = new Elysia()
+  .use(cors())
+  .get("/ping", () => {
+    console.info("🏓 Ping endpoint called!");
 
-  // Adicionar headers CORS manualmente
-  set.headers["Access-Control-Allow-Origin"] = "*";
-  set.headers["Access-Control-Allow-Methods"] =
-    "GET, POST, PUT, DELETE, OPTIONS";
-  set.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization";
+    const response = {
+      message: "pong from Bun sidecar!",
+      timestamp: new Date().toISOString(),
+      status: "success",
+      bunVersion: Bun.version,
+    };
 
-  const response = {
-    message: "pong from Bun sidecar!",
-    timestamp: new Date().toISOString(),
-    status: "success",
-  };
-
-  console.info("🏓 Retornando resposta:", JSON.stringify(response));
-  return response;
-});
+    console.info("🏓 Retornando resposta:", JSON.stringify(response));
+    return response;
+  })
+  .get("/version", () => {
+    console.info("📋 Version endpoint called!");
+    
+    const versionInfo = {
+      bun: Bun.version,
+      node: process.version,
+      platform: process.platform,
+      arch: process.arch,
+    };
+    
+    console.info("📋 Retornando versões:", JSON.stringify(versionInfo));
+    return versionInfo;
+  });
 
 // Use dynamic port (0 = system assigns available port)
 app.listen(0);
@@ -61,3 +72,6 @@ process.on("SIGINT", () => {
 process.on("exit", () => {
   console.info("👋 Sidecar process exiting...");
 });
+
+// Export the app type for Eden Treaty
+export type App = typeof app;
