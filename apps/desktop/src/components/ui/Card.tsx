@@ -19,20 +19,16 @@ export function Card({
   ...props
 }: Readonly<CardProps>): JSX.Element {
   const baseClasses = "card animate-fade-in";
-  
+
   const variantClasses = {
     default: "",
     glass: "glass",
     elevated: "shadow-2xl hover:shadow-3xl transition-shadow duration-300",
   };
-  
+
   return (
     <div
-      className={cn(
-        baseClasses,
-        variantClasses[variant],
-        className
-      )}
+      className={cn(baseClasses, variantClasses[variant], className)}
       {...props}
     >
       {children}
@@ -50,7 +46,10 @@ export function CardHeader({
 }: Readonly<HTMLAttributes<HTMLDivElement>>): JSX.Element {
   return (
     <div
-      className={cn("mb-4 pb-2 border-b border-slate-200 dark:border-slate-700", className)}
+      className={cn(
+        "mb-4 pb-2 border-b border-slate-200 dark:border-slate-700",
+        className,
+      )}
       {...props}
     >
       {children}
@@ -67,10 +66,7 @@ export function CardContent({
   ...props
 }: Readonly<HTMLAttributes<HTMLDivElement>>): JSX.Element {
   return (
-    <div
-      className={cn("space-y-4", className)}
-      {...props}
-    >
+    <div className={cn("space-y-4", className)} {...props}>
       {children}
     </div>
   );

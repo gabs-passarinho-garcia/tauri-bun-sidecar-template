@@ -7,7 +7,7 @@
   html {
     @apply antialiased;
   }
-  
+
   body {
     @apply bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800;
     @apply text-slate-900 dark:text-slate-100;
@@ -23,37 +23,37 @@
     @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
     @apply disabled:opacity-50 disabled:cursor-not-allowed;
   }
-  
+
   .btn-primary {
     @apply bg-primary-600 hover:bg-primary-700 text-white;
     @apply focus:ring-primary-500;
     @apply shadow-lg hover:shadow-xl;
   }
-  
+
   .btn-secondary {
     @apply bg-slate-200 hover:bg-slate-300 text-slate-900;
     @apply dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-slate-100;
     @apply focus:ring-slate-500;
   }
-  
+
   .card {
     @apply bg-white dark:bg-slate-800 rounded-xl shadow-lg;
     @apply border border-slate-200 dark:border-slate-700;
     @apply p-6;
   }
-  
+
   .status-badge {
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
-  
+
   .status-success {
     @apply bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-200;
   }
-  
+
   .status-loading {
     @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200;
   }
-  
+
   .status-error {
     @apply bg-danger-100 text-danger-800 dark:bg-danger-900 dark:text-danger-200;
   }
@@ -64,7 +64,7 @@
   .text-gradient {
     @apply bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent;
   }
-  
+
   .glass {
     @apply backdrop-blur-sm bg-white/80 dark:bg-slate-800/80;
     @apply border border-white/20 dark:border-slate-700/50;

@@ -1,7 +1,12 @@
 import { JSX, useState, useEffect, useMemo } from "react";
 import { useSidecarPort } from "./hooks/useSidecarPort";
 import { Button, Card, CardHeader, CardContent, Badge } from "./components/ui";
-import { ServerIcon, PlayIcon, CheckCircleIcon, ExclamationTriangleIcon } from "./components/icons";
+import {
+  ServerIcon,
+  PlayIcon,
+  CheckCircleIcon,
+  ExclamationTriangleIcon,
+} from "./components/icons";
 import { createApiClient } from "./services/api";
 
 function App(): JSX.Element {
@@ -113,9 +118,7 @@ function App(): JSX.Element {
             <p className="text-slate-600 dark:text-slate-400 mb-4">
               Erro ao inicializar o sidecar
             </p>
-            <Badge variant="error">
-              {sidecarError}
-            </Badge>
+            <Badge variant="error">{sidecarError}</Badge>
           </CardContent>
         </Card>
       </div>
@@ -149,11 +152,11 @@ function App(): JSX.Element {
               <div className="flex items-center gap-3">
                 <ServerIcon className="w-8 h-8 text-indigo-600" />
                 <div>
-                  <p className="font-medium">
-                    Estado do Sidecar
-                  </p>
+                  <p className="font-medium">Estado do Sidecar</p>
                   <p className="text-sm text-slate-600 dark:text-slate-400">
-                    {sidecarPort ? `A correr na porta ${sidecarPort}` : "A inicializar..."}
+                    {sidecarPort
+                      ? `A correr na porta ${sidecarPort}`
+                      : "A inicializar..."}
                   </p>
                 </div>
               </div>
@@ -178,20 +181,36 @@ function App(): JSX.Element {
                 </h3>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
                   <div>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">Bun:</span>
-                    <span className="ml-2 text-slate-600 dark:text-slate-400">{versionInfo.bun}</span>
+                    <span className="font-medium text-slate-700 dark:text-slate-300">
+                      Bun:
+                    </span>
+                    <span className="ml-2 text-slate-600 dark:text-slate-400">
+                      {versionInfo.bun}
+                    </span>
                   </div>
                   <div>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">Node:</span>
-                    <span className="ml-2 text-slate-600 dark:text-slate-400">{versionInfo.node}</span>
+                    <span className="font-medium text-slate-700 dark:text-slate-300">
+                      Node:
+                    </span>
+                    <span className="ml-2 text-slate-600 dark:text-slate-400">
+                      {versionInfo.node}
+                    </span>
                   </div>
                   <div>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">Platform:</span>
-                    <span className="ml-2 text-slate-600 dark:text-slate-400">{versionInfo.platform}</span>
+                    <span className="font-medium text-slate-700 dark:text-slate-300">
+                      Platform:
+                    </span>
+                    <span className="ml-2 text-slate-600 dark:text-slate-400">
+                      {versionInfo.platform}
+                    </span>
                   </div>
                   <div>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">Arch:</span>
-                    <span className="ml-2 text-slate-600 dark:text-slate-400">{versionInfo.arch}</span>
+                    <span className="font-medium text-slate-700 dark:text-slate-300">
+                      Arch:
+                    </span>
+                    <span className="ml-2 text-slate-600 dark:text-slate-400">
+                      {versionInfo.arch}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -231,7 +250,9 @@ function App(): JSX.Element {
 
         {/* Rodapé */}
         <div className="text-center text-sm text-slate-500 dark:text-slate-400 animate-fade-in">
-          <p>Construído com ❤️ usando Tauri, React, TypeScript e Tailwind CSS</p>
+          <p>
+            Construído com ❤️ usando Tauri, React, TypeScript e Tailwind CSS
+          </p>
         </div>
       </div>
     </div>
@@ -239,4 +260,3 @@ function App(): JSX.Element {
 }
 
 export default App;
-
