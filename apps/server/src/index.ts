@@ -21,14 +21,14 @@ const app = new Elysia()
   })
   .get("/version", () => {
     console.info("📋 Version endpoint called!");
-    
+
     const versionInfo = {
       bun: Bun.version,
       node: process.version,
       platform: process.platform,
       arch: process.arch,
     };
-    
+
     console.info("📋 Retornando versões:", JSON.stringify(versionInfo));
     return versionInfo;
   });

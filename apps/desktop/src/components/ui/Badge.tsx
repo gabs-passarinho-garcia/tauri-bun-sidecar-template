@@ -22,27 +22,27 @@ export function Badge({
   ...props
 }: Readonly<BadgeProps>): JSX.Element {
   const baseClasses = "status-badge";
-  
+
   const variantClasses = {
     success: "status-success",
     loading: "status-loading animate-pulse",
     error: "status-error",
     info: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
   };
-  
+
   const sizeClasses = {
     sm: "px-2 py-0.5 text-xs",
     md: "px-2.5 py-0.5 text-xs",
     lg: "px-3 py-1 text-sm",
   };
-  
+
   return (
     <span
       className={cn(
         baseClasses,
         variantClasses[variant],
         sizeClasses[size],
-        className
+        className,
       )}
       {...props}
     >

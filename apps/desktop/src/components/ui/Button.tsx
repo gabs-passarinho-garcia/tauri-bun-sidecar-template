@@ -26,20 +26,22 @@ export function Button({
   ...props
 }: Readonly<ButtonProps>): JSX.Element {
   const baseClasses = "btn";
-  
+
   const variantClasses = {
     primary: "btn-primary",
     secondary: "btn-secondary",
-    outline: "border-2 border-primary-600 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20",
-    ghost: "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300",
+    outline:
+      "border-2 border-primary-600 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20",
+    ghost:
+      "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300",
   };
-  
+
   const sizeClasses = {
     sm: "px-3 py-1.5 text-xs",
     md: "px-4 py-2 text-sm",
     lg: "px-6 py-3 text-base",
   };
-  
+
   return (
     <button
       className={cn(
@@ -47,7 +49,7 @@ export function Button({
         variantClasses[variant],
         sizeClasses[size],
         isLoading && "cursor-not-allowed opacity-70",
-        className
+        className,
       )}
       disabled={disabled || isLoading}
       {...props}
